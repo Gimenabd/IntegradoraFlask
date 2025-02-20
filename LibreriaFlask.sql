@@ -1,7 +1,6 @@
 CREATE DATABASE Libreria;
 USE Libreria;
 
-
 CREATE TABLE Direccion (
     Id_direccion INT AUTO_INCREMENT PRIMARY KEY,
     Calle VARCHAR(100) NOT NULL,
@@ -10,7 +9,6 @@ CREATE TABLE Direccion (
     Estado VARCHAR(50) NOT NULL,
     CP VARCHAR(10) NOT NULL
 );
-
 
 CREATE TABLE Usuarios (
     ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -21,10 +19,8 @@ CREATE TABLE Usuarios (
     Contrasenia VARCHAR(255) NOT NULL,
     Id_direccion INT,
     Id_sesion INT,
-    Id_ventas INT,
-    FOREIGN KEY (Id_direccion) REFERENCES Direccion(Id_direccion)
+    Id_ventas INT
 );
-
 
 CREATE TABLE Inicio_de_Sesion (
     Id_sesion INT AUTO_INCREMENT PRIMARY KEY,
@@ -34,16 +30,13 @@ CREATE TABLE Inicio_de_Sesion (
     Id_ventas INT
 );
 
-
 CREATE TABLE Almacen (
     Id_almacen INT AUTO_INCREMENT PRIMARY KEY,
     Email VARCHAR(100) UNIQUE NOT NULL,
     Existencias INT NOT NULL,
     Id_sesion INT,
-    Id_libros INT,
-    FOREIGN KEY (Id_sesion) REFERENCES Inicio_de_Sesion(Id_sesion)
+    Id_libros INT
 );
-
 
 CREATE TABLE Libros (
     Id_libros INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,10 +46,8 @@ CREATE TABLE Libros (
     Costo DECIMAL(10, 2) NOT NULL,
     Editorial VARCHAR(100),
     Autor VARCHAR(100),
-    Id_almacen INT,
-    FOREIGN KEY (Id_almacen) REFERENCES Almacen(Id_almacen)
+    Id_almacen INT
 );
-
 
 CREATE TABLE Ventas (
     Id_ventas INT AUTO_INCREMENT PRIMARY KEY,
@@ -65,7 +56,14 @@ CREATE TABLE Ventas (
     Costo DECIMAL(10, 2) NOT NULL,
     VentasTotalesPesos DECIMAL(12, 2) NOT NULL,
     Id_libros INT,
-    Id_usuario INT,
-    FOREIGN KEY (Id_libros) REFERENCES Libros(Id_libros),
-    FOREIGN KEY (Id_usuario) REFERENCES Usuarios(ID)
+    Id_usuario INT
 );
+INSERT INTO Usuarios (Tipo_de_Usuario, Nombre_completo, Email, Telefono, Contrasenia)
+VALUES ('Administrador', 'Juan Pérez', 'juan.perez@example.com', '1234567890', 'admin123');
+
+INSERT INTO Usuarios (Tipo_de_Usuario, Nombre_completo, Email, Telefono, Contrasenia)
+VALUES ('Cliente', 'María Gómez', 'maria.gomez@example.com', '0987654321', 'cliente123');
+
+
+SELECT * FROM Usuarios;
+/*drop database libreria;*/
