@@ -62,13 +62,13 @@ CREATE TABLE Ventas (
 INSERT INTO Direccion (Calle, Pais, Ciudad, Estado, CP) 
 VALUES ('Av. Siempre Viva 742', 'México', 'CDMX', 'CDMX', '01234');
 
-/*INSERT INTO Usuarios (Tipo_de_Usuario, Nombre_completo, Email, Telefono, Contrasenia)
+INSERT INTO Usuarios (Tipo_de_Usuario, Nombre_completo, Email, Telefono, Contrasenia)
 VALUES ('Administrador', 'Juan Pérez', 'juan.perez@example.com', '1234567890', 'admin123');
 
 INSERT INTO Usuarios (Tipo_de_Usuario, Nombre_completo, Email, Telefono, Contrasenia)
 VALUES ('Cliente', 'María Gómez', 'maria.gomez@example.com', '0987654321', 'cliente123');
 
-SELECT * FROM Usuarios;*/
+SELECT * FROM Usuarios;
 
 INSERT INTO Inicio_de_Sesion (Email, Contra, Id_libros, Id_ventas) 
 VALUES ('juan@example.com', 'contraseña_segura', NULL, NULL);

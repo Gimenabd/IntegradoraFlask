@@ -37,7 +37,7 @@ def login():
         cursor = conn.cursor()
 
         # Verificar si el email existe en la base de datos
-        cursor.execute("SELECT ID, Contrasenia, Tipo_de_Usuario FROM Usuarios WHERE Email = %s", (email,))
+        cursor.execute("SELECT Id_usuarios, Contrasenia, Tipo_de_Usuario FROM Usuarios WHERE Email = %s", (email,))
         user = cursor.fetchone()
 
         if user:
@@ -68,6 +68,36 @@ def admin_dashboard():
     if 'usuario' not in session or session.get('tipo_usuario') != 'Administrador':
         return redirect(url_for('login'))
     return "Bienvenido al panel de administración."
+
+# Ruta para registrar un nuevo libro (solo para Administradores)
+@app.route('/register_book', methods=['GET', 'POST'])
+def register_book():
+    # Verificar que el usuario esté logueado y sea administrador
+    if 'usuario' not in session or session.get('tipo_usuario') != 'Administrador':
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        nombre = request.form['nombre']
+        estado = request.form['estado']  # Debe ser 'Disponible' o 'Vendido'
+        existencia = request.form['existencia']
+        costo = request.form['costo']
+        editorial = request.form['editorial']
+        autor = request.form['autor']
+
+        # Conectar a la base de datos y ejecutar la consulta
+        conn = mysql.connect
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO Libros (Nombre, Estado, Existencia, Costo, Editorial, Autor)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """, (nombre, estado, existencia, costo, editorial, autor))
+        conn.commit()
+
+        flash('Libro registrado correctamente', 'success')
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template('register_book.html')
 
 
 # Ruta para el panel de cliente
